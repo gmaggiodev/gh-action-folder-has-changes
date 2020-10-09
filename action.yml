@@ -1,0 +1,13 @@
+name: Folder has changes
+description: Check if a folder has changes in the payload of push
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: folder-plus
+  color: green
+inputs:
+  folder:
+    description: 'folder path to check'
+    default: '/'
+    required: false

@@ -6,6 +6,17 @@ const folder = core.getInput('folder');
 async function run() {
   try {
 		console.log(github.context.payload);
+		
+		const commits = github.context.payload.commits;
+
+		commits.forEach(commit => {
+			const id = commit.id;
+
+			// Check the content using git diff-tree
+			let changes = execSync(`git diff-tree --no-commit-id --name-only -r ${id} ${folder}`).toString().trim();
+			console.log(changes);
+		});
+		
 		core.setOutput('hasChanges', 0);
   }
   catch (error) {

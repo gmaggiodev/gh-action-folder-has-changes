@@ -15,7 +15,8 @@ async function run() {
 
 			// Check the content using git diff-tree
 			let changes = execSync(`git diff-tree --no-commit-id --name-only -r ${id} ${folder}`).toString().trim();
-			console.log(changes);
+			console.log("executing: " + `git diff-tree --no-commit-id --name-only -r ${id} ${folder}`);
+			console.log(`changes for ${id} - ${changes}`);
 		});
 		
 		core.setOutput('hasChanges', 0);

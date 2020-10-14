@@ -11,9 +11,12 @@ async function run() {
 		commits.forEach(commit => {
 			const id = commit.id;
 
+			console.log(commit);
 			// Check the content using git diff-tree
-			let changes = execSync(`git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
-			console.log("executing: " + `git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
+			let changes = await github.runInWorkspace('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id, '--', folder]);
+
+			//let changes = execSync(`git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
+			//console.log("executing: " + `git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
 			console.log(`changes for ${id} - ${changes}`);
 			
 		});

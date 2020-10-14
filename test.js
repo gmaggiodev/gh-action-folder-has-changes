@@ -1,6 +1,6 @@
 const { execSync } = require('child_process');
 
-let id = "d3a4d78f1f416fc0ddba25b169ae133a96f865b7";
+let id = "6d4e7d3";
 let folder = "folder"
 
 // Check the content using git diff-tree

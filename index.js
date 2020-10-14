@@ -8,7 +8,7 @@ async function run() {
 	try {
 		const commits = github.context.payload.commits;
 
-		commits.forEach(commit => {
+		commits.forEach(async commit => {
 			const id = commit.id;
 
 			console.log(commit);

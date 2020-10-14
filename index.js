@@ -22,11 +22,11 @@ async function run() {
 					output += data.toString();
 				},
 				stderr: (data) => {
-					error += data.toString();W
+					error += data.toString();
 				}
 			};
 
-			await exec.exec('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id], options);
+			await exec.exec('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id, '--', folder], options);
 
 			//let changes = execSync(`git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
 			//console.log("executing: " + `git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);

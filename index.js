@@ -26,7 +26,7 @@ async function run() {
 				}
 			};
 
-			await exec.exec('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id, '--', folder], options);
+			await exec.exec('git', ['diff-tree', '--no-commit-id', '--name-only', '-r', id, '--', folder], options);
 
 			//let changes = execSync(`git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
 			if (!error)

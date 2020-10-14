@@ -9,5 +9,5 @@ branding:
 inputs:
   folder:
     description: 'folder path to check'
-    default: '/'
+    default: ''
     required: false

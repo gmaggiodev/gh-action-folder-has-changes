@@ -1,31 +1,46 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { execSync } = require('child_process');
+const exec = require('@actions/exec');
 
 const folder = core.getInput('folder');
 
 async function run() {
-  try {
+	try {
 		const commits = github.context.payload.commits;
 
-		commits.forEach(async commit => {
+		commits.forEach(commit => {
 			const id = commit.id;
 
 			console.log(commit);
 			// Check the content using git diff-tree
-			let changes = await github.runInWorkspace('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id, '--', folder]);
+			let output = '';
+			let error = '';
+
+			const options = {};
+			options.listeners = {
+				stdout: (data) => {
+					output += data.toString();
+				},
+				stderr: (data) => {
+					error += data.toString();W
+				}
+			};
+
+			await exec.exec('git', ['diff-tree', '--no-commit-id', '--name-only', '-z', '-r', id, '--', folder], options);
 
 			//let changes = execSync(`git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
 			//console.log("executing: " + `git diff-tree --no-commit-id --name-only -z -r ${id} -- ${folder}`);
-			console.log(`changes for ${id} - ${changes}`);
-			
+			if (!error)
+				console.log(`changes for ${id} - ${output}`);
+			else
+				console.error(error);
 		});
-		
+
 		core.setOutput('hasChanges', 0);
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
+	}
+	catch (error) {
+		core.setFailed(error.message);
+	}
 }
 
 run();
